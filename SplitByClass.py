@@ -2,7 +2,7 @@
 # 生成PyTorch的 torchvision.datasets.ImageFolder所需的格式
 
 # 1.生成(图片名：类别)组成的列表
-with open('/media/xuyue/HDD/dataset/VeRi/annot/keypoint_image_train.txt','r') as f:
+with open('/media/xuyue/HDD/dataset/VeRi/annot/keypoint_image_test.txt','r') as f:
     annos = f.readlines()
 
 annos = [(x.split(' ')[0].split('/')[-1], int(x.split(' ')[-1].strip('\n'))) for x in annos]
@@ -10,8 +10,8 @@ annos = [(x.split(' ')[0].split('/')[-1], int(x.split(' ')[-1].strip('\n'))) for
 # 2.移动数据
 import shutil
 import os
-PATH_INPUT = '/media/xuyue/HDD/dataset/VeRi/image_train'
-PATH_OUTPUT = '/media/xuyue/HDD/dataset/VeRi/train_split_by_class'
+PATH_INPUT = '/media/xuyue/HDD/dataset/VeRi/image_test'
+PATH_OUTPUT = '/media/xuyue/HDD/dataset/VeRi/train_split_by_class/val'
 if not os.path.exists(PATH_OUTPUT):
     os.mkdir(PATH_OUTPUT)
 else:
