@@ -53,25 +53,44 @@ for iterCount in range(0, args.group_num):
     probeIndice = []
     galleryIndice = []
     galleryCount = []
-    for car in carsList:
-        if car[1][1] - car[1][0] + 1 <= 6:
-            continue
-        galleryIndexArr = []
-        # there are 6 images in gallery set per class
-        # other images are throw to probe set
-        while len(galleryIndexArr) < car[1][1] - car[1][0]:
-            galleryIndex = random.randint(car[1][0], car[1][1])
-            if not galleryIndex in galleryIndexArr:
-                galleryIndexArr.append(galleryIndex)
+    # 之前的理解好像有问题。。
+    # for car in carsList:
+    #     if car[1][1] - car[1][0] + 1 <= 6:
+    #         continue
+    #     galleryIndexArr = []
+    #     # there are 6 images in gallery set per class
+    #     # other images are throw to probe set
+    #     while len(galleryIndexArr) < car[1][1] - car[1][0]:
+    #         galleryIndex = random.randint(car[1][0], car[1][1])
+    #         if not galleryIndex in galleryIndexArr:
+    #             galleryIndexArr.append(galleryIndex)
             
-        tmpCount = 0
+    #     tmpCount = 0
+    #     for i in range(car[1][0], car[1][1]+1):
+    #         if i not in galleryIndexArr:
+    #             probeIndice.append(tuple([i, car[0]]))
+    #         else:
+    #             galleryIndice.append(tuple([i,car[0]]))
+    #             tmpCount += 1
+    #     galleryCount.append(tmpCount)
+
+    for car in carsList:
+        probeIndex = random.randint(car[1][0], car[1][1])
+        probeIndice.append(tuple([probeIndex, car[0]]))
+        #if car[1][1] - car[1][0] >= 6:
         for i in range(car[1][0], car[1][1]+1):
-            if i not in galleryIndexArr:
-                probeIndice.append(tuple([i, car[0]]))
-            else:
-                galleryIndice.append(tuple([i,car[0]]))
-                tmpCount += 1
-        galleryCount.append(tmpCount)
+            if i != probeIndex:
+                galleryIndice.append(tuple([i, car[0]]))
+        if car[1][1] - car[1][0] < 6:
+            for i in range(0, 6-(car[1][1] - car[1][0])):
+                while True:
+                    galleryIndex =  random.randint(car[1][0], car[1][1])
+                    if galleryIndex != probeIndex:
+                        galleryIndice.append(tuple([galleryIndex, car[0]]))
+                        break
+            galleryCount.append(6)
+        else:
+            galleryCount.append(car[1][1] - car[1][0])
 
 
     print 'calculate similarity matrix ...'
